@@ -1,0 +1,25 @@
+{
+  "name": "metodopagamento",
+  "version": "1.0.0",
+  "description": "Diretório para o trabalho de Computação Distribuída",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/006pedrosa/CompDistribuida.git"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.1",
+    "express": "~4.15.4",
+    "mongoose": "~4.11.12",
+    "request": "~2.82.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/006pedrosa/CompDistribuida/issues"
+  },
+  "homepage": "https://github.com/006pedrosa/CompDistribuida#readme"
+}
