@@ -18,6 +18,24 @@ var port = process.env.port || 8000;
 //Criando uma instancia da rota via express
 var router = express.Router();
 
+router.route('/pagamentos')
+  .post(function(req, res){
+      var pagamento = new Pagamento();
+
+      pagamento.valor = req.body.valor;
+      pagamento.data_pagamento = Date.now();
+      pagamento.tipo_pagamento = req.body.tipo;
+
+      pagamento.save(function(error){
+        if(error){
+            res.send('Erro ao tentar salvar o pagamento ' + error);
+        }else{        
+            res.json({message: 'Pagamento salvo!'});
+        }
+
+      });
+  });
+
 router.use(function(req, res, next){
     console.log('Midleware executando');
     next();
