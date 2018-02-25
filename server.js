@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Pagamento = require('./app/models/pagamentos');
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect('mongodb://pedrosa:963258741@ds143678.mlab.com:43678/heroku_38gx7b12', {
     useMongoClient:true
 });
@@ -48,6 +50,59 @@ router.route('/pagamentos')
             }
         });
   });
+
+router.route('/pagamentos/:pagamento_id')
+
+  //PROCURA APENAS POR UM PAGAMENTO DADO UM DETERMINADO ID
+  .get(function(req, res){
+      Pagamento.findById(req.params.pagamento_id, function(error, pagamento){
+          if(error){
+              res.send('Id do pagamento não encontrado');
+          }else{
+            res.json(pagamento);
+          }
+      });
+  })
+
+  //ATUALIZA UM PAGAMENTO
+  .put(function(req, res){
+
+    Pagamento.findById(req.params.pagamento_id, function(error, pagamento){
+        if(error){
+            res.send('Id do pagamento não encontrado');
+        }else{
+            if(req.body.valor != null){
+                pagamento.valor = req.body.valor;
+            }
+            if(req.body.tipo_pagamento != null){
+                pagamento.tipo_pagamento = req.body.tipo_pagamento;
+            }
+          pagamento.save(function(error){
+              if(error){
+                res.send('Erro ao tentar alterar o pagamento ' + error);
+              }else{
+                res.json({message: 'Pagamento alterado!'});  
+              }
+          });
+        }
+    });
+
+  })
+
+  .delete(function(req, res){
+      
+    Pagamento.remove({
+        _id: req.params.pagamento_id
+    }, function(error){
+        if(error){
+            res.send("Id do pagamento não encontrado : " + error);
+        }else{
+            res.json({message: 'Pagamento excluído!'});
+        }
+    
+    });
+  })
+
 
 router.use(function(req, res, next){
     console.log('Midleware executando');
