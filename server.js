@@ -19,6 +19,8 @@ var port = process.env.port || 8000;
 var router = express.Router();
 
 router.route('/pagamentos')
+
+//POST - CRIAR PAGAMENTO NO BANCO
   .post(function(req, res){
       var pagamento = new Pagamento();
 
@@ -34,6 +36,17 @@ router.route('/pagamentos')
         }
 
       });
+  })
+
+  //GET ALL - SELECIONAR TODOS OS DADOS DE PAGAMENTO DO BANCO
+  .get(function(req, res){
+        Pagamento.find(function(error, pagamentos){
+            if(error){
+                res.send('Erro ao tentar salvar o pagamento ' + error);
+            }else{        
+                res.json(pagamentos);
+            }
+        });
   });
 
 router.use(function(req, res, next){
