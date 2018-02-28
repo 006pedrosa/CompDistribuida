@@ -28,7 +28,7 @@ router.route('/pagamentos')
 
       pagamento.valor = req.body.valor;
       pagamento.data_pagamento = Date.now();
-      pagamento.tipo_pagamento = req.body.tipo;
+      pagamento.tipo_pagamento = req.body.tipo_pagamento;
 
       pagamento.save(function(error){
         if(error){
@@ -102,6 +102,22 @@ router.route('/pagamentos/:pagamento_id')
     
     });
   })
+
+  router.route('/pagamentos/findinterval/:data_pagamento')
+
+ .get(function(req, res){
+     Pagamento.find({data_pagamento: {
+        $gte: Date.parse(req.params.data_pagamento),
+        $lt: Date.now()
+      }
+    }).exec(function(error, pagamentos){
+        if(error){
+            res.send("Intervalo inválido : " + error);
+        }else{
+            res.json(pagamentos);
+        }
+    })
+ });
 
 
 router.use(function(req, res, next){
