@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 //PORTA QUE SERA UTILIZADA PARA RECEBER A CONEXÃO
-var port = process.env.port || 8000;
+var port = process.env.port || 5000;
 
 //Criando uma instancia da rota via express
 var router = express.Router();
