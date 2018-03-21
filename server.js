@@ -129,7 +129,11 @@ router.get('/', function(req, res){
 });
 
 //PADRAO DE PRE-FIXO DA ROTA
-app.use('/pagamentoapi', router);
+app.use('/pagamentoapi', router).options('/*', function(req, res) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.send(200);
+});
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
